@@ -1,14 +1,19 @@
 $(document).ready(function () {
     console.log(moment())
     // moment object
-    var m = moment()
-    var today = m.format("hh:mm")
-    var workHours = [m.startOf('day').add(9, 'hours').format("hh:mm"),m.startOf('day').add(10, 'hours').format("hh:mm"),m.startOf('day').add(11, 'hours').format("hh:mm"),m.startOf('day').add(12, 'hours').format("hh:mm"),m.startOf('day').add(13, 'hours').format("hh:mm"),m.startOf('day').add(14, 'hours').format("hh:mm"),m.startOf('day').add(15, 'hours').format("hh:mm"),m.startOf('day').add(16, 'hours').format("hh:mm"),m.startOf('day').add(17, 'hours').format("hh:mm")]
-     // var for today display
+    var m = moment.parseZone()
+    var today = moment.parseZone()
+// arrays for working hours 9-5 formatted for in LT and military time
+var workHours = [m.startOf('day').add(9, 'hours').format("hh:mm a"),m.startOf('day').add(10, 'hours').format("hh:mm a"),m.startOf('day').add(11, 'hours').format("hh:mm a"),m.startOf('day').add(12, 'hours').format("hh:mm a"),m.startOf('day').add(13, 'hours').format("hh:mm a"),m.startOf('day').add(14, 'hours').format("hh:mm a"),m.startOf('day').add(15, 'hours').format("hh:mm a"),m.startOf('day').add(16, 'hours').format("hh:mm a"),m.startOf('day').add(17, 'hours').format("hh:mm a"),m.startOf('day').add(18, 'hours').format("hh:mm a")]
+var workHoursHH = [m.startOf("day").add(9,"hours").format("HH"),m.startOf("day").add(10,"hours").format("HH"),m.startOf("day").add(11,"hours").format("HH"),m.startOf("day").add(12,"hours").format("HH"),m.startOf("day").add(13,"hours").format("HH"),m.startOf("day").add(14,"hours").format("HH"),m.startOf("day").add(15,"hours").format("HH"),m.startOf("day").add(16,"hours").format("HH"),m.startOf("day").add(17,"hours").format("HH"),m.startOf("day").add(18,"hours").format("HH")]
+
+
+// var for today display
      var todayDisplay = $("#today")
     todayDisplay.text(today)
     // placeholder for task lists
-    console.log(today)
+
+
     // ident task list 
     var taskList = $("#taskList")
 
@@ -20,7 +25,6 @@ $(document).ready(function () {
         taskList.empty()
             // loop through for each hour of the work day
             for (i = 0; i < workHours.length-1; i++) {
-            // console.log(workHours[i])
             //  create new div 
             var newDiv = $("<div>")
             // add class to the new div
@@ -34,26 +38,27 @@ $(document).ready(function () {
             // now we add a textarea
             var textArea = $("<textarea>")
             // add attr to the textarea
-
+            textArea.attr("cols", 20)
+            textArea.attr("id", "txt"+i)
             // if text-block date value you is less than current time add the past class to the textarea
-            if (workHours[i+1] > today == true) {
+            if ((workHoursHH[i] < today.format("HH"))) {
                 textArea.addClass("past")
             }
             // if current text-block value is greater than today add future class to the textarea
-            else if (today > workHours[i] == true) {
-
+            else if ((workHoursHH[i] > today.format("HH"))) {
                 textArea.addClass("future")
             }
             // if the the current text-block value is between the current time add the present class to the textarea
-            else if (workHours[i+1] > today && today > workHours[i] == true) {
+            else if ((workHoursHH[i+1] > today.format("HH") && workHoursHH[i] < today.format("HH"))) {
                 textArea.addClass("present")
             } 
-            textArea.attr("cols", 50)
+            
             // now we add the button
-            var button = $("<button>")
-            button.addClass("saveBtn")
-            button.text("Save")
-            button.attr("type", "submit")
+            var button = $("<button>");
+            button.addClass("saveBtn");
+            button.text("Save");
+            button.attr("id", i)
+            button.attr("type", "submit");
             // append the created elements to the new div
             label.appendTo(newDiv);
             textArea.appendTo(newDiv);
@@ -85,29 +90,29 @@ $(document).ready(function () {
         }
     // when a timeblock is selected
     $("textarea").on("click", function () {
-        // console.log(this.value)
+        
     });
 
-    // // when the save button is clicked
-    // $(selector).submit(function (e) { 
-    //     e.preventDefault();
-
-    //     var TaskText = TaskInput.value.trim();
+    // when the save button is clicked
+    $(".saveBtn").submit(function (e) { 
+        e.preventDefault();
+        alert("boom")
+        var TaskText = TaskInput.value.trim();
       
-    //     // Return from function early if submitted task is blank
-    //     if (TaskText === "") {
-    //       return;
-    //     }
+        // Return from function early if submitted task is blank
+        if (TaskText === "") {
+          return;
+        }
       
-    //     // Add new TaskText to Tasks array, clear the input
-    //     Tasks.push(TaskText);
-    //     TaskInput.value = "";
+        // Add new TaskText to Tasks array, clear the input
+        Tasks.push(TaskText);
+        TaskInput.value = "";
       
-    //     // Store updated Tasks in localStorage, re-render the list
-    //     storeTasks();
-    //     renderTasks();
+        // Store updated Tasks in localStorage, re-render the list
+        storeTasks();
+        renderTasks();
         
-    // });
+    });
   
 
 
