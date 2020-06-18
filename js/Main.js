@@ -62,7 +62,7 @@ $(document).ready(function () {
             if ((workHoursHH[i] < today.format("HH"))) {
                 // add the past style to the task
                 textArea.addClass("past")
-                textArea.text(thisTask)
+                textArea.text("Time to complete this task has passed, try again tomorrow.")
             }
             // if current text-block value is greater than today add future class to the textarea
             else if ((workHoursHH[i] > today.format("HH"))) {
@@ -101,7 +101,7 @@ $(document).ready(function () {
     }   
 
 
- $("time-block").submit(function (e) { 
+ $(".time-block").submit(function (e) { 
      e.preventDefault();
      
  });
@@ -121,7 +121,7 @@ $(document).ready(function () {
         // then, store the new task value in the task array.
         tasks.timeBlks.splice((timeBlock),1,(areaVal))
         console.log(tasks.timeBlks[timeBlock])
-        // alert(tasks.timeBlks[timeBlock])
+
 
         storeTask();
         renderWorkHours();
