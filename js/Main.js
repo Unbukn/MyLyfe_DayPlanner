@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    console.log(moment())
     // moment object
     var m = moment.parseZone()
     var today = moment.parseZone()
@@ -65,7 +64,7 @@ $(document).ready(function () {
             if ((workHoursHH[i] < today.format("HH"))) {
                 // add the past style to the task
                 textArea.addClass("past")
-                textArea.text("Task window closed, get it done tomorrow.")
+                textArea.text(thisTask)
             }
             // if current text-block value is greater than today add future class to the textarea
             else if ((workHoursHH[i] > today.format("HH"))) {
@@ -104,11 +103,10 @@ $(document).ready(function () {
     }   
 
 
-    // // when a timeblock is selected
-    // $("textarea").on("click", function () {
-  
-
-    // });
+ $("time-block").submit(function (e) { 
+     e.preventDefault();
+     
+ });
 
     // when the save button is clicked
     $(".saveBtn").click(function (e) { 
@@ -127,7 +125,6 @@ $(document).ready(function () {
         console.log(tasks.timeBlks[timeBlock])
         // alert(tasks.timeBlks[timeBlock])
 
-        // localStorage.setItem("tasks", JSON.stringify(tasks));
         storeTask();
         renderWorkHours();
     });
