@@ -18,10 +18,8 @@ $(document).ready(function () {
     var tasks = {
         timeBlks : [" "," "," "," "," "," "," "," "," "],
     }
-
     
-    // initialize check for existing tasks
-    // Check for existing entires
+    // initialize check for existing tasks then check for existing entires
     function init() {
         // Get stored tasks from localStorage
         // Parsing the JSON string to an object
