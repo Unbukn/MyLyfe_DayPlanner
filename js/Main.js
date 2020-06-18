@@ -122,9 +122,10 @@ $(document).ready(function () {
         tasks.timeBlks.splice((timeBlock),1,(areaVal))
         console.log(tasks.timeBlks[timeBlock])
 
-
+        // store the task list
         storeTask();
-        renderWorkHours();
+        // refresh the dom so the clicking the save button event can happen multiple times
+        document.reload()
     });
   
 
